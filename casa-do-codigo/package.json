@@ -1,0 +1,23 @@
+{
+  "name": "casa-do-codigo",
+  "version": "1.0.0",
+  "description": "Livraria Casa do Codigo",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicolasapb/curso-node-novo-alura.git"
+  },
+  "author": "Nicolas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nicolasapb/curso-node-novo-alura/issues"
+  },
+  "homepage": "https://github.com/nicolasapb/curso-node-novo-alura#readme",
+  "dependencies": {
+    "express": "4.16.3"
+  }
+}
