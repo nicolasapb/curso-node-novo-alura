@@ -28,18 +28,65 @@ module.exports = app => {
                     livros
                 }
             ))
-            .catch(erro => console.log('algo deu errado:', erro)); 
+            .catch(erro => console.log('algo deu errado:', erro));  
+    });
 
-        // livroDao.lista(function(error, result){ 
-        //     if (error) {
-        //         console.log('aconteceu algo errado', error);
-        //     }
-        //     res.marko(
-        //         require('../views/livros/lista/lista.marko'),
-        //         {
-        //             livros: result
-        //         }
-        //     );
-        // });
+    app.get('/livros/form/:id', (req, res) => {
+
+        const id = req.params.id;
+
+        if (!id) {
+            return res.status(404).end();
+        }
+
+        const livroDao = new LivroDao(db);
+        
+        livroDao
+            .buscaPorId(id)
+            .then(livro => {
+                if (!livro) return res.status(404).end();
+
+                res.marko(
+                    require('../views/livros/form/form.marko'),
+                    {
+                        livro
+                })
+            })
+            .catch(erro => console.log('algo deu errado:', erro));
+    });
+
+    app.get('/livros/form', (req, res) => 
+        res.marko(require('../views/livros/form/form.marko'), { livro: {} })
+    );
+
+    app.post('/livros', (req, res) => { 
+
+        const livroDao = new LivroDao(db);
+
+        livroDao
+            .adiciona(req.body)
+            .then(res.redirect('/livros'))
+            .catch(erro => console.log('algo deu errado:', erro));        
+    });
+
+    app.put('/livros', (req, res) => { 
+
+        const livroDao = new LivroDao(db);
+
+        livroDao
+            .atualiza(req.body)
+            .then(res.redirect('/livros'))
+            .catch(erro => console.log('algo deu errado:', erro));        
+    });
+
+    app.delete('/livros/:id', (req, res) => {
+        const id = req.params.id;
+
+        const livroDao = new LivroDao(db);
+
+        livroDao
+            .remove(id)
+            .then(() => res.status(200).end())
+            .catch(erro => console.log('algo deu errado:', erro));
     });
 };
